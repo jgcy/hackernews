@@ -8,18 +8,16 @@ post '/status/new' do
   @user = User.where(id: session[:id]).first
   @status = Status.create(status_body: params["status_body"], user_id: @user.id)
 
-  tag_array = params["tag"]["name"].split(", ")
-  tag_array.each do |tag|
-    if Tag.where(name: tag).present?
-      @status_tag = StatusTag.create(status_id: @status.id, tag_id: tag.id)
-      byebug
-    else
-      new_tag = Tag.create(name: tag, status_id: @status.id)
-      @status_tag = StatusTag.create(status_id: @status.id, tag_id: new_tag.id)
-      byebug
-    end
+  # tag_array = params["tag"]["name"].split(", ")
+  # tag_array.each do |tag|
+  #   if Tag.where(name: tag).present?
+  #     @status_tag = StatusTag.create(status_id: @status.id, tag_id: tag.id)
+  #   else
+  #     new_tag = Tag.create(name: tag, status_id: @status.id)
+  #     @status_tag = StatusTag.create(status_id: @status.id, tag_id: new_tag.id)
+  #   end
   redirect to("/status/#{@status.id}")
-  end
+  # end
 end
 
 # show status
