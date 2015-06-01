@@ -1,0 +1,13 @@
+<h3>Edit your comment</h3>
+
+<form action="/status/<%= @status.id %>/comment/<%= @comment.id %>" method="post">
+<input type="hidden" name="_method" value="PUT">
+<p>Update comment:</p>
+<textarea cols="60" rows="5" name="comment_body">
+  <%= @comment.comment_body %>
+</textarea>
+<br/><br/>
+<input type="submit" value="Comment!">
+</form>
+<br/><br/>
+<a href="/status/<%= @status.id %>">Cancel update</a>

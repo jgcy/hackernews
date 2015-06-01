@@ -7,22 +7,21 @@ end
 post '/status/new' do
   @user = User.where(id: session[:id]).first
   @status = Status.create(status_body: params["status_body"], user_id: @user.id)
-
-  # tag_array = params["tag"]["name"].split(", ")
-  # tag_array.each do |tag|
-  #   if Tag.where(name: tag).present?
-  #     @status_tag = StatusTag.create(status_id: @status.id, tag_id: tag.id)
-  #   else
-  #     new_tag = Tag.create(name: tag, status_id: @status.id)
-  #     @status_tag = StatusTag.create(status_id: @status.id, tag_id: new_tag.id)
-  #   end
-  redirect to("/status/#{@status.id}")
-  # end
+    if Tag.find_by_name(params["tag_name"]) != nil
+      @tag = Tag.where(name: params["tag_name"])[0]
+      @status_tag = StatusTag.create(status_id: @status.id, tag_id: @tag.id)
+    else
+      @tag = Tag.create(name: params["tag_name"])
+      @status_tag = StatusTag.create(status_id: @status.id, tag_id: @tag.id)
+    end
+    redirect to("/status/#{@status.id}")
 end
+
 
 # show status
 get '/status/:status_id' do
   @status = Status.find(params[:status_id])
+  @comments = Comment.all
   erb :"status/show"
 end
 
@@ -47,6 +46,9 @@ get '/status/:status_id/delete' do
   redirect to("/feed")
 end
 
+# show all statuses with same tag
 get '/tag/:tag_id' do
+  @tag = Tag.where(id: params[:tag_id]).first
   erb :tag
 end
+

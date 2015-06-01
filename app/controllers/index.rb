@@ -32,8 +32,9 @@ get '/feed' do
   else
     @user = User.where(id: session[:id]).first
     @statuses = Status.all
-    erb :feed
+    @tags = Tag.all
   end
+    erb :feed
 end
 
 get '/logout' do

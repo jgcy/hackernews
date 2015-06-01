@@ -1,8 +1,14 @@
-<a href="/status/new">New status</a> | <a href="/logout">Log out</a></p>
+<p><a href="/status/new">New status</a> | <a href="/logout">Log out</a></p>
 
 <% @statuses.each do |s| %>
 <p><%= s.status_body %><br/>
-<font size="0.5px">Created at: <a href="/status/<%= s.id %>"><%= s.created_at %></a> | By <a href="/profile/<%= s.user_id %>">user <%= s.user_id %><%= %></a> | <a href="/status/<%= s.id %>/edit">Edit</a> | <a href="/status/<%= s.id %>/delete">Delete</a></font></p>
+<font size="0.5px">
+  Tagged: <% s.tags.each do |tag| %>
+  <a href="/tag/<%= tag.id %>"><%= tag.name %></a>
+  <% end %>
+  <br/>
+  Created at: <a href="/status/<%= s.id %>"><%= s.created_at %></a> | By <a href="/profile/<%= s.user_id %>">user <%= s.user_id %><%= %></a> | <a href="/status/<%= s.id %>/edit">Edit</a> | <a href="/status/<%= s.id %>/delete">Delete</a><br/>
+    <a href="/status/<%= s.id%>/comment/new">Leave a comment</a></font></p>
 <% end %>
 
 
