@@ -1,0 +1,6 @@
+<p>
+  <%= @status.status_body %><br/>
+  <font size="0.5px">Created at: <a href="/status/<%= @status.id %>"><%= @status.created_at %></a> | <a href="/status/<%= @status.id %>/edit">Edit</a> | <a href="/status/<%= @status.id %>/delete">Delete</a></font>
+</p>
+
+<a href="/feed">Go back to feed</a>

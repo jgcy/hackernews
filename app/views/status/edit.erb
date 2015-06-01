@@ -1,0 +1,11 @@
+<h3>Edit status</h3>
+
+<form action="/status/<%= @status.id %>" method="post">
+<input type="hidden" name="_method" value="PUT">
+<p>Type here:</p>
+<textarea cols="60" rows="5" name="status_body">
+  <%= @status.status_body %>
+</textarea>
+<br/><br/>
+<input type="submit" value="Update!">
+</form>

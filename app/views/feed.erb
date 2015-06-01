@@ -1,0 +1,10 @@
+<a href="/status/new">New status</a> | <a href="/logout">Log out</a></p>
+
+<% @statuses.each do |s| %>
+<p><%= s.status_body %><br/>
+  <%= s.tag %><br/>
+  <% byebug %>
+<font size="0.5px">Created at: <a href="/status/<%= s.id %>"><%= s.created_at %></a> | By <a href="/profile/<%= s.user_id %>">user <%= s.user_id %><%= %></a> | <a href="/status/<%= s.id %>/edit">Edit</a> | <a href="/status/<%= s.id %>/delete">Delete</a></font></p>
+<% end %>
+
+
