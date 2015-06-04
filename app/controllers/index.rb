@@ -16,6 +16,11 @@ end
 get '/' do
   #show all post
   @posts = Post.all
+  if session[:id]
+    @user = User.find(session[:id])
+  else
+    @user = nil
+  end
   erb :index
 end
 

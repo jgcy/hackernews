@@ -1,11 +1,47 @@
 <p><b>Hacker News</b>  <a href="/post/new">New post</a> | <a href="/login">Log in</a> | <a href="/logout">Log out</a></p>
 
 <% @posts.each do |p| %>
-<p><a href="<%= p.link %>"><%= p.title %></a><br/>
-<font size="0.5px">by <a href="/user/<%= p.user.id %>"><%= p.user.username %></a> at <%= p.created_at %> | <a href="/post/<%= p.id %>"><%= p.comments.count %> comments</a> </font></p>
-
-<!--
-  Created at: <a href="/status/<%= p.id %>"><%= p.created_at %></a> | By <a href="/profile/<%= p.user_id %>">user <%= p.user_id %><%= %></a> | <a href="/status/<%= p.id %>/edit">Edit</a> | <a href="/status/<%= p.id %>/delete">Delete</a><br/>
-    <a href="/status/<%= p.id%>/comment/new">Leave a comment</a></p> -->
+  <div id="post<%= p.id %>">
+    <a href="<%= p.link %>"><%= p.title %></a>
+    <br/>
+    <font size="0.5px">by
+      <a href="/user/<%= p.user.id %>">
+        <%= p.user.username %>
+      </a> at <%= p.created_at %> |
+      <a href="/post/<%= p.id %>">
+        <%= p.comments.count %> comments
+      </a>
+      <form class="upvote" action="/post/<%= p.id %>/upvote" method="post" >
+        <input <%= "disabled" if @user && !p.postvotes.where(user_id: @user.id).empty? %> type="submit" value="upvote">
+      </form> | <votes><%= p.postvotes.count %></votes> votes
+    </font>
+  </div>
 <% end %>
 
+<script>
+$(document).ready(function(){
+
+
+  $(".upvote").submit(function(event){
+    event.preventDefault();
+    var self = $(this);
+    var action = self.attr("action");
+    var method = self.attr("method");
+    var data = self.serialize();
+    $.ajax({
+      type: method,
+      url: action,
+      data: data,
+      dataType: "json"
+    })
+    .done(function(response){
+      var post = $("#post" + response.post.post.id)
+      post.find("input").attr("disabled", "disabled")
+      var votes = $("votes")
+      post.find("votes").text(response.count)
+    })
+  });
+
+
+});
+</script>

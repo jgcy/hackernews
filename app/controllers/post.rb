@@ -18,3 +18,18 @@ get '/post/:post_id' do
   @comments = @post.comments
   erb :"post/show"
 end
+
+post '/post/:post_id/upvote' do
+  @user = User.find(session[:id])
+  @post = Post.find(params[:post_id])
+  @vote = Postvote.vote_only_once(@user.id, @post.id)
+  if @vote
+    @upvote = Postvote.create(user_id: @user.id, post_id: @post.id)
+  end
+  @posts = Post.all
+  # @posts.to_json
+  {post: @post, count: @post.postvotes.count}.to_json
+  # @post.to_json
+  # erb :index
+end
+

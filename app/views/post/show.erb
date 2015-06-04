@@ -10,7 +10,7 @@
     <% @comments.each do |comment| %>
     <p>
       <%= comment.body %><br/>
-      <font size="0.5px">by <a href="/profile/<%= comment.user_id %>"><%= comment.user.username %></a></font>
+      <font size="0.5px">by <a href="/profile/<%= comment.user_id %>"><%= comment.user.username %></a> | <a href="/post/<%= @post.id %>/<%= comment.id %>/upvote">vote up</a> | <%= comment.commentvotes.count %> votes</font>
     </p>
     <% end %>
   <% end %>

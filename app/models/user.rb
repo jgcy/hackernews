@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
 
   has_many :posts
   has_many :comments
+  has_many :postvotes
+  has_many :postcomments
+
 
 
   def self.authenticate(username, password)
