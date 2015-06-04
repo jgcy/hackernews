@@ -18,6 +18,9 @@
   <title></title>
 </head>
 <body>
+   <% if logged_in? %>
+   Welcome <%= username %>
+   <% end %>
   <div class="container">
   <%= yield %>
 </div>

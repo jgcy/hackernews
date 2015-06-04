@@ -1,0 +1,8 @@
+<h1><%= @user.username %>'s comments</h1>
+(<a href="/user/<%= @user.id %>">Link to profile</a>)
+
+<% @comments.each do |c| %>
+<p><%= c.body %><br/>
+<font size="0.5px">on: <a href="<%= c.post.link %>"><%= c.post.title %></a> at <%= c.created_at %> </font>
+
+<% end %>

@@ -1,0 +1,20 @@
+<p><%= @post.title %></p>
+
+<p>
+  <% if @comments != nil %>
+    <% @comments.each do |comment| %>
+    <p>
+      <%= comment.body %><br/>
+      <font size="0.5px">By <a href="/profile/<%= comment.user_id %>"><%= comment.user.username %></a></font>
+    </p>
+    <% end %>
+  <% end %>
+</p>
+
+<form action="/post/<%= @post.id %>/comment/new" method="post">
+<p>New comment:</p>
+<textarea cols="60" rows="5" name="body">
+</textarea>
+<br/><br/>
+<input type="submit" value="Comment!">
+</form>

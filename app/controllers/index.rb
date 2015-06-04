@@ -1,14 +1,22 @@
 enable :sessions
 
-get '/' do
-    erb :index
+def logged_in?
+  if session[:id] == nil
+    false
+  else
+    true
+  end
 end
 
-post '/sign_up' do
-  @user = User.create(params["user"])
-  @profile = Profile.create(first_name: params["profile"]["first_name"], last_name: params["profile"]["last_name"], user_id: @user.id)
-  session[:id] = @user.id
-  redirect to("/feed")
+def username
+  @user = User.find(session[:id])
+  @user.username
+end
+
+get '/' do
+  #show all post
+  @posts = Post.all
+  erb :index
 end
 
 get '/login' do
@@ -16,28 +24,24 @@ get '/login' do
 end
 
 post '/login' do
-  @user = User.authenticate(params["user"]["email"], params["user"]["password"])
+  @user = User.authenticate(params["user"]["username"], params["user"]["password"])
 
   if @user
     session[:id] = @user.id
-    redirect to("/feed")
+    redirect to("/")
   else
     redirect to("/login")
   end
 end
 
-get '/feed' do
-  if session[:id].nil?
-    redirect to("/")
-  else
-    @user = User.where(id: session[:id]).first
-    @statuses = Status.all
-    @tags = Tag.all
-  end
-    erb :feed
+post '/sign_up' do
+  @user = User.create(params["user"])
+  session[:id] = @user.id
+  redirect to("/")
 end
 
 get '/logout' do
   session[:id] = nil
   redirect to '/'
 end
+

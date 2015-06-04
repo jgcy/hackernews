@@ -1,21 +1,11 @@
+<p><b>Hacker News</b>  <a href="/post/new">New post</a> | <a href="/login">Log in</a> | <a href="/logout">Log out</a></p>
 
-<h1>Welcome to Facebook!</h1>
-<img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTFiStlgvSMDt570pzb_B-ieQYgZUlgJrPUP7FlPTIOYTcyzaQLvGd56eSU" width="100px"/>
+<% @posts.each do |p| %>
+<p><a href="<%= p.link %>"><%= p.title %></a><br/>
+<font size="0.5px">by <a href="/user/<%= p.user.id %>"><%= p.user.username %></a> at <%= p.created_at %> | <a href="/post/<%= p.id %>"><%= p.comments.count %> comments</a> </font></p>
 
-<h3>To start sharing, sign up.</h3>
-<form action="/sign_up" method="post">
-<p>First name:</p>
-<input type="text" name="profile[first_name]">
-<p>Last name:</p>
-<input type="text" name="profile[last_name]">
-<p>Email:</p>
-<input type="text" name="user[email]">
-<p>Password:</p>
-<input type="password" name="user[password]">
-<br/><br/>
-<input type="submit" value="Sign up!">
-</form>
-
-
-<h3>If you already have an account, <a href="/login">log in.</a></h3>
+<!--
+  Created at: <a href="/status/<%= p.id %>"><%= p.created_at %></a> | By <a href="/profile/<%= p.user_id %>">user <%= p.user_id %><%= %></a> | <a href="/status/<%= p.id %>/edit">Edit</a> | <a href="/status/<%= p.id %>/delete">Delete</a><br/>
+    <a href="/status/<%= p.id%>/comment/new">Leave a comment</a></p> -->
+<% end %>
 

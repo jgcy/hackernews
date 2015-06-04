@@ -1,7 +1,7 @@
 class Comment < ActiveRecord::Base
-  validates :comment_body, presence: true
+  validates :body, presence: true
 
   belongs_to :user
-  belongs_to :status
+  belongs_to :post
 
 end
